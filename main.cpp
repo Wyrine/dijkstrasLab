@@ -7,5 +7,6 @@ using namespace std;
 
 int main(){
   ifstream input(FILENAME);
+  checkFile();
   readFile(input);
 }
