@@ -15,8 +15,9 @@ void checkFile(ifstream& input){
   //loop while the input fail flag is set
   while(input.fail()){
     cout << "File opening failed. Try again: ";
-    //read in a fileName from the user and try again
+    //read in a fileName from the user
     cin >> fileName;
+    //try to open
     input.open(fileName);
   }
 }
@@ -40,6 +41,8 @@ void readFile(ifstream& input, Graph &myGraph){
     targetNode.push_back(targetData);
     connectionWeight.push_back(weightData);
   }
+  //finished reading from the file. Closing the file
   input.close();
-  //myGraph.buildGraph(graphSize, startNode, targetNode, connectionWeight);
+  //call the buildRelation to create load the myGraph instance with the data
+  myGraph.buildRelation(graphSize, startNode, targetNode, connectionWeight);
 }
