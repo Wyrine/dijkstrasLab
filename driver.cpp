@@ -46,3 +46,27 @@ void readFile(ifstream& input, Graph &myGraph){
   //call the buildRelation to create load the myGraph instance with the data
   myGraph.buildRelation(graphSize, startNode, targetNode, connectionWeight);
 }
+
+//mainMenu Asks the user if they would like to view the shortest path from one
+//node to another or not
+void mainMenu(Graph myGraph){
+  char choice;
+  int startNode, targetNode;
+  do{
+    //Asking the user if they would like to get the shortest path
+    cout << "Would you like to find the shortest path between two nodes (y/n)? ";
+    cin >> choice;
+    //if the user wants to get the shortest path
+    if(choice == 'y' || choice == 'Y'){
+      cout << "Which node would you like to be the start node? ";
+      cin >> startNode;
+      cout << "Which node would you like to be the target node? ";
+      cin >> targetNode;
+      //finding the shortest path between the two nodes
+      //myGraph.shortestPath(startNode, targetNode);
+    }
+  //loop while the user wanted to see a shortest path
+  }while(choice == 'y' || choice == 'Y');
+  //thanking the user
+  cout << "Thank you for using this program! Goodbye!\n";
+}

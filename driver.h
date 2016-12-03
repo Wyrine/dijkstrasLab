@@ -15,3 +15,4 @@ const std::string FILENAME = "graphdata.txt";
 //prototypes for functions
 void checkFile(std::ifstream& input);
 void readFile(std::ifstream& input, Graph &myGraph);
+void mainMenu(Graph myGraph);
