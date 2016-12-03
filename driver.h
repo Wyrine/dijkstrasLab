@@ -5,11 +5,13 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <algorithm>
+#include "graph.h"
 
 //creating a constant that is the file name with the graph data
 const std::string FILENAME = "graphdata.txt";
 
 
 //prototypes for functions
-void checkFile(ifstream& input);
-void readFile(std::ifstream& input);
+void checkFile(std::ifstream& input);
+void readFile(std::ifstream& input, Graph &myGraph);
