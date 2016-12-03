@@ -6,6 +6,18 @@
 
 using namespace std;
 
+//buildGraph fills the adjacencyList with the appropriate weights for an undirected graph
+void Graph::buildGraph(vector<int> start, vector<int> target, vector<int> weight){
+  //looping from the start to the end of all three vectors at the same time
+  //since they are all the same length
+  for(int i = 0; i < start.size(); i++){
+    //assign the weight from node a to b to be the current weight
+    adjacencyList[start[i]-1][target[i]-1] = weight[i];
+    //assign the weight from node b to a to be the current weight
+    adjacencyList[target[i]-1][start[i]-1] = weight[i];
+  }
+}
+
 //buildRelation builds the adjacency relation through memory allocation and initializes
 //the indices with -1 if not in the main diagonal otherwise with 0 and then calls buildGraph
 //to fill the graph with the proper values
@@ -26,7 +38,20 @@ void Graph::buildRelation(int graphSize, vector<int> start, vector<int> target, 
     }
   }
   //calling the buildGraph method to fill the matrix with the proper values
-  //builGraph(vector<int> start, vector<int> target, vector<int> weight);
+  buildGraph(start, target, weight);
+}
+//print method to print the matrix. Purely for error checking/debugging
+void Graph::print(){
+  //loop through the rows of the matrix
+  for(int i = 0; i < graphSize; i++){
+    //so we know the row number
+    cout << i+1 << "| ";
+    //loop through the columns of the matrix
+    for(int j = 0; j < graphSize; j++)
+      //print out the current value
+      cout << adjacencyList[i][j] << "  ";
+    cout << endl;
+  }
 }
 
 //destructor for the Graph class to deallocate the adjacencyList allocation

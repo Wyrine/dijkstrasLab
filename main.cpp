@@ -16,4 +16,5 @@ int main(){
   checkFile(input);
   //reading in the data from the file and initializing the graph
   readFile(input, myGraph);
+  myGraph.print();
 }
