@@ -20,8 +20,8 @@ void Graph::buildGraph(vector<int> start, vector<int> target, vector<int> weight
 
 //finding the shortest path between two nodes with weighted arcs
 void Graph::dijkstraAlgorithm(int startNode, int targetNode, int** adjacencyList){
-  //f will be the array that contains list of the nodes that have been fixed
-  vector<int> f;
+  //solution will have the path from start to finish
+  vector<int> solution;
   //declaring a DijkstraVariable array which has a distance and path
   DijkstraVariable* var = new DijkstraVariable [graphSize];
   //declaring some needed variables and setting least to be the biggest number
@@ -36,32 +36,31 @@ void Graph::dijkstraAlgorithm(int startNode, int targetNode, int** adjacencyList
   while(nextPath != targetNode){
     least = INT_MAX;
     for(i = 0; i < graphSize; i++){
-      if(!var[i].isFixed() && var[i].dist > 0){
+      if(!var[i].isFixed()){
         prevMin = least;
         least = min(least, var[i].dist);
-        if (prevMin != least) nextPath = i;
+        if (prevMin > least) nextPath = i;
       }
     }
-    if(least > 0 && least < INT_MAX){
-      var[nextPath].flipFixed();
-      for(i = 0; i < graphSize; i++){
-        if(!var[i].isFixed()){
-          least = min(var[i].dist, adjacencyList[nextPath][i] + var[nextPath].dist);
-          if(least < var[i].dist){
-            var[i].dist = least;
-            var[i].path = nextPath;
-          }
+    var[nextPath].flipFixed();
+    for(j = 0; j < graphSize; j++){
+      cout << "or here?" << endl;
+      if(!var[j].isFixed()){
+        least = min(var[j].dist, adjacencyList[nextPath][j] + var[nextPath].dist);
+        if(least < var[j].dist){
+          var[j].dist = least;
+          var[j].path = nextPath;
         }
       }
     }
   }
-  nextPath = targetNode;
+  nextPath = targetNode+1;
   do{
-    f.push_back(nextPath);
-    nextPath = var[nextPath].path;
-  }while(nextPath != startNode);
-  f.push_back(nextPath);
-  for(i = 0; i < f.size(); i ++) cout << f[i] << " ";
+    solution.push_back(nextPath);
+    nextPath = var[nextPath].path+1;
+  }while(nextPath-1 != startNode);
+  solution.push_back(nextPath);
+  for(i = solution.size()-1; i > 0; i--) cout << solution[i] << " ";
   cout << endl;
   cout << "D = " << var[targetNode].dist << endl;
   var = NULL;
