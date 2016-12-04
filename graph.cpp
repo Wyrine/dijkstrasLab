@@ -24,43 +24,45 @@ void Graph::dijkstraAlgorithm(int startNode, int targetNode, int** adjacencyList
   vector<int> solution;
   //declaring a DijkstraVariable array which has a distance and path
   DijkstraVariable* var = new DijkstraVariable [graphSize];
-  //declaring some needed variables and setting least to be the biggest number
-  //an int can be
-  int i, j, least, prevMin, nextPath = startNode;
+  //declaring some needed variables
+  int i, j, least, numFixed, nextPath = startNode;
   for(i = 0; i < graphSize; i++){
-    if(i == startNode){
-      var[i].flipFixed();
-    }
+    if(i == startNode) var[i].flipFixed();
     var[i].setValue(startNode, adjacencyList[startNode][i]);
   }
-  while(nextPath != targetNode){
+  while(!var[targetNode].isFixed()){
     least = INT_MAX;
     for(i = 0; i < graphSize; i++){
       if(!var[i].isFixed()){
-        prevMin = least;
-        least = min(least, var[i].dist);
-        if (prevMin > least) nextPath = i;
+        if(var[i].dist != INT_MAX && var[i].dist != 0 ){
+          if(var[i].dist < least) {
+            nextPath = i;
+            least = var[i].dist;
+          }
+        }
       }
     }
     var[nextPath].flipFixed();
+    least = INT_MAX;
     for(j = 0; j < graphSize; j++){
-      cout << "or here?" << endl;
+      cout << "hey";
+
       if(!var[j].isFixed()){
         least = min(var[j].dist, adjacencyList[nextPath][j] + var[nextPath].dist);
         if(least < var[j].dist){
-          var[j].dist = least;
-          var[j].path = nextPath;
+          var[j].setValue(nextPath, least);
         }
       }
     }
   }
-  nextPath = targetNode+1;
+  solution.clear();
+  nextPath = targetNode;
   do{
     solution.push_back(nextPath);
-    nextPath = var[nextPath].path+1;
-  }while(nextPath-1 != startNode);
+    nextPath = var[nextPath].path;
+  }while(nextPath != startNode);
   solution.push_back(nextPath);
-  for(i = solution.size()-1; i > 0; i--) cout << solution[i] << " ";
+  for(i = solution.size()-1; i > 0; i--) cout << solution[i]+1 << " ";
   cout << endl;
   cout << "D = " << var[targetNode].dist << endl;
   var = NULL;
@@ -109,6 +111,9 @@ void Graph::print(){
 //shortest path calls the shortWeighted method and the shortestUnweighted methods
 //to find the shortest paths of an undirectd graph
 void Graph::shortestPath(int startNode, int targetNode){
+  //creating a temp 2D array and allocating/initializing it
+  //and it will be used to find the unweighted shortest path
+  //and it essentially changes all of the weights to be 1
   int** tempAdj;
   tempAdj = new int* [graphSize];
   for(int i = 0; i < graphSize; i++){
@@ -116,16 +121,18 @@ void Graph::shortestPath(int startNode, int targetNode){
     for(int j = 0; j < graphSize; j++){
       if(adjacencyList[i][j] == INT_MAX || adjacencyList[i][j] == 0)
         tempAdj[i][j] = adjacencyList[i][j];
-      else
+      else //if the index had a weight that wasn't the max or 0
+        //set it to 1. All weights will be 1
         tempAdj[i][j] = 1;
     }
   }
-  //getting the shortest weighted path
   cout << "Weighted:\nPath1 = ";
+  //calling dijkstraAlgorithm with the adjacencyList because it's the weighted one
   dijkstraAlgorithm(startNode-1, targetNode-1, adjacencyList);
-  //getting the shortest unweighted path
   cout << "Unweighted:\nPath2 = ";
+  //calling dijkstraAlgorithm with the tempAdj because it's the unweighted one
   dijkstraAlgorithm(startNode-1, targetNode-1, tempAdj);
+  //deallocating the tempAdj matrix
   for(int i = 0; i < graphSize; i++){
     tempAdj[i] = NULL;
     delete[] tempAdj[i];
