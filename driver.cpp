@@ -63,7 +63,7 @@ void mainMenu(Graph myGraph){
       cout << "Which node would you like to be the target node? ";
       cin >> targetNode;
       //finding the shortest path between the two nodes
-      //myGraph.shortestPath(startNode, targetNode);
+      myGraph.shortestPath(startNode, targetNode);
     }
   //loop while the user wanted to see a shortest path
   }while(choice == 'y' || choice == 'Y');
