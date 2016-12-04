@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <vector>
+#include <climits>
 
 #define CUR_START start[i]-1
 #define CUR_TARGET target[i]-1
@@ -15,10 +16,13 @@ class Graph;
 class DijkstraVariable{
   friend class Graph;
   bool fixed;
-  int value;
+  int path, dist;
   DijkstraVariable(){ fixed = false; }
   void flipFixed(){ fixed = true; }
-  void setValue(int v){ value = v; }
+  void setValue(int node, int len){
+    dist = len;
+    path = node;
+  }
   bool isFixed(){ return fixed; }
 };
 
@@ -29,8 +33,7 @@ class Graph{
 
   //the private methods
   void buildGraph(vector<int> start, vector<int> target, vector<int> weight);
-  void shortestWeighted(int startNode, int targetNode);
-  void shortestUnweighted(int startNode, int targetNode);
+  void dijkstraAlgorithm(int startNode, int targetNode, int** adjacencyList);
 public:
   //the public methods
   void buildRelation(int graphSize, vector<int> start, vector<int> target, vector<int> weight);

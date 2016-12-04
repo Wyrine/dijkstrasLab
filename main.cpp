@@ -17,7 +17,7 @@ int main(){
   //reading in the data from the file and initializing the graph
   readFile(input, myGraph);
   //printing to check if the graph was built properly
-  //myGraph.print();
+  myGraph.print();
   mainMenu(myGraph);
   //dijkstras algorithm with and without weights
   //done
