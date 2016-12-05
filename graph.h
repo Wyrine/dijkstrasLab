@@ -4,7 +4,9 @@
 
 #include <iostream>
 #include <vector>
+#include <stack>
 #include <climits>
+#include <algorithm>
 
 #define CUR_START start[i]-1
 #define CUR_TARGET target[i]-1

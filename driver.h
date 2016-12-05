@@ -9,7 +9,7 @@
 #include "graph.h"
 
 //creating a constant that is the file name with the graph data
-const std::string FILENAME = "graphdata.txt";
+const std::string FILENAME = "./src/graphdata.txt";
 
 
 //prototypes for functions
